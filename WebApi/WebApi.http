@@ -1,0 +1,6 @@
+@TelegramClone_HostAddress = http://localhost:5280
+
+GET {{TelegramClone_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
