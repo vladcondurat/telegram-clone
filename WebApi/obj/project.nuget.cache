@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "M9pvbu6ZU5EJh+f5D2oTxOBM8l1ArGC68RJ2XPL3RQJTyPpn0Gh4eDlKX8b2PUu6TWg9qfPnVtbOisYGU7adRQ==",
+  "dgSpecHash": "QHZ+qbpI/5GxMPUXuZAOsPj5vbFhvo7/0Jq64FJN0Vh0OHbhPuXRpye1b8PGpNAWLMf2MkFYbYW3M09n7OA94g==",
   "success": true,
   "projectFilePath": "/Users/vladcondurat/RiderProjects/TelegramClone/WebApi/WebApi.csproj",
   "expectedPackageFiles": [
@@ -18,6 +18,7 @@
     "/Users/vladcondurat/.nuget/packages/microsoft.extensions.options/8.0.0/microsoft.extensions.options.8.0.0.nupkg.sha512",
     "/Users/vladcondurat/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "/Users/vladcondurat/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
+    "/Users/vladcondurat/.nuget/packages/riok.mapperly/3.4.0-next.3/riok.mapperly.3.4.0-next.3.nupkg.sha512",
     "/Users/vladcondurat/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "/Users/vladcondurat/.nuget/packages/swashbuckle.aspnetcore.swagger/6.4.0/swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "/Users/vladcondurat/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.4.0/swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",

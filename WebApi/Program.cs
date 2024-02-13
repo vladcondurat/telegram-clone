@@ -10,6 +10,8 @@
 // using RedditAPI.Services.Features.Posts;
 // using RedditAPI.Services.Features.Users;
 
+using WebApi.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // builder.Services.AddDbContext<AppDbContext>(o =>
@@ -29,6 +31,8 @@ builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddScoped<ICommentService, CommentService>();
 // builder.Services.AddScoped<ILikeService, LikeService>();
 builder.Services.AddSwaggerGen();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
@@ -39,8 +43,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseRouting();
 
+app.UseExceptionHandler();
+
+app.UseRouting();
 
 app.UseCors(corsPolicyBuilder =>
 {
