@@ -14,3 +14,5 @@
 /Users/vladcondurat/RiderProjects/TelegramClone/Services/obj/Debug/net8.0/refint/Services.dll
 /Users/vladcondurat/RiderProjects/TelegramClone/Services/obj/Debug/net8.0/Services.pdb
 /Users/vladcondurat/RiderProjects/TelegramClone/Services/obj/Debug/net8.0/ref/Services.dll
+/Users/vladcondurat/RiderProjects/TelegramClone/Services/bin/Debug/net8.0/Services.runtimeconfig.json
+/Users/vladcondurat/RiderProjects/TelegramClone/Services/obj/Debug/net8.0/Services.genruntimeconfig.cache

@@ -1,5 +1,5 @@
+using Data.Entities;
 using Data.Infrastructure.UnitOfWork;
-using Services.Constants;
 using Services.Exceptions;
 using Services.Mappers;
 
@@ -18,9 +18,22 @@ public class UserService : IUserService
 
     public UserDto GetDetails(int? id)
     {
+        //handle null id
         var user = _unitOfWork.Users.GetById(id.Value);
 
-        if (user is null) throw new UserException(ErrorCodes.GenericError, "This is a generic error");
+        if (user is null) throw new EntityNotFoundException(id.Value, typeof(User));
+        
+        var mapper = new UserMapper();
+        
+        return mapper.UserToUserDto(user);
+    }
+
+    public UserDto GetUserByUsername(string? username)
+    {
+        //handle null username
+        var user = _unitOfWork.Users.GetByUsername(username);
+        
+        if (user is null) throw new EntityNotFoundException(user.Id, typeof(User));
         
         var mapper = new UserMapper();
         

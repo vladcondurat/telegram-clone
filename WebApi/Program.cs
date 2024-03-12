@@ -1,38 +1,32 @@
-// using Microsoft.EntityFrameworkCore;
-// using RedditAPI.Data.Infrastructure.Context;
-// using RedditAPI.Data.Infrastructure.UnitOfWork;
-// using RedditAPI.Data.Repositories.CommentRepository;
-// using RedditAPI.Data.Repositories.LikeRepository;
-// using RedditAPI.Data.Repositories.PostRepository;
-// using RedditAPI.Data.Repositories.UserRepository;
-// using RedditAPI.Services.Features.Comments;
-// using RedditAPI.Services.Features.Likes;
-// using RedditAPI.Services.Features.Posts;
-// using RedditAPI.Services.Features.Users;
-
+using Microsoft.EntityFrameworkCore;
+using Data.Infrastructure.Context;
+using Data.Infrastructure.UnitOfWork;
+using Data.Repositories.UserRepository;
+using Services.Features.Auth;
+using Services.Features.Users;
+using WebApi.Configurations;
 using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddDbContext<AppDbContext>(o =>
-//     o.UseSqlServer(
-//         "Server=localhost,1433;Database=reddit-db;User Id=SA;Password=Vladcondurat2003;MultipleActiveResultSets=true;TrustServerCertificate=true"));
-builder.Services.AddControllers();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer("Server=localhost,1433;Database=test-db;User Id=SA;Password=Vladcondurat2003;MultipleActiveResultSets=true;TrustServerCertificate=true",
+        b => b.MigrationsAssembly("WebApi")));
 
-builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddScoped<IAppDbContext, AppDbContext>();
-// builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-// builder.Services.AddScoped<IUserRepository, UserRepository>();
-// builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-// builder.Services.AddScoped<IPostRepository, PostRepository>();
-// builder.Services.AddScoped<ILikeRepository, LikeRepository>();
-// builder.Services.AddScoped<IUserService, UserService>();
-// builder.Services.AddScoped<IPostService, PostService>();
-// builder.Services.AddScoped<ICommentService, CommentService>();
-// builder.Services.AddScoped<ILikeService, LikeService>();
-builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+builder.Services.AddScoped<IAppDbContext, AppDbContext>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerProperties();
+builder.Services.AddJwtAuthorization(builder.Configuration);
 
 var app = builder.Build();
 
@@ -55,5 +49,10 @@ app.UseCors(corsPolicyBuilder =>
         .AllowAnyMethod();
 });
 
+app.UseAuthentication();
+
+app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();

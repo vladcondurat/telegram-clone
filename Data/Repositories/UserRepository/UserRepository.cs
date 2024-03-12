@@ -21,5 +21,13 @@ public class UserRepository : Repository<User>, IUserRepository
             .FirstOrDefault(u => u.Id == id);
         return user!;
     }
+
+    public User GetByUsername(string username)
+    {
+        var user = _dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefault(u => u.Username == username);
+        return user!;
+    }
     
 }

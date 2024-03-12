@@ -16,8 +16,9 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<User>()
             .HasKey(u => u.Id);
 
-        modelBuilder.Entity<User>().Property(x => x.Name).HasMaxLength(100);
+        modelBuilder.Entity<User>().Property(x => x.Username).HasMaxLength(100);
         modelBuilder.Entity<User>().Property(x => x.Password).HasMaxLength(100);
+        modelBuilder.Entity<User>().Property(x => x.Email).HasMaxLength(100);
 
         base.OnModelCreating(modelBuilder);
     }

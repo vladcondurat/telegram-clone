@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Features.Users;
 using WebApi.Mappers;
@@ -6,7 +7,7 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("api/users")]
-public class UserController : ControllerBase
+public class UserController : ApplicationController
 {
     private readonly IUserService _userService;
 
@@ -16,6 +17,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public IActionResult GetUserDetails(int? userId)
     {
         var mapper = new UserMapper();
