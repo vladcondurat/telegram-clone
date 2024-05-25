@@ -1,8 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Data.Infrastructure.Context;
 using Data.Infrastructure.UnitOfWork;
+using Data.Repositories.MessageRepository;
+using Data.Repositories.RoomRepository;
 using Data.Repositories.UserRepository;
+using Data.Repositories.UserRoomRepository;
 using Services.Features.Auth;
+using Services.Features.Messages;
+using Services.Features.Rooms;
 using Services.Features.Users;
 using WebApi.Configurations;
 using WebApi.Middleware;
@@ -19,6 +24,11 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IUserRoomRepository, UserRoomRepository>();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();

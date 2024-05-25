@@ -21,7 +21,7 @@ public class UserController : ApplicationController
     public IActionResult GetUserDetails(int? userId)
     {
         var mapper = new UserMapper();
-        var userDto = _userService.GetDetails(userId);
+        var userDto = _userService.GetUserById(userId);
         return Ok(mapper.UserDtoToUserModel(userDto));
     }
 
