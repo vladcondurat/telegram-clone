@@ -142,3 +142,4 @@
 /Users/vladcondurat/RiderProjects/TelegramClone/WebApi/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /Users/vladcondurat/RiderProjects/TelegramClone/WebApi/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /Users/vladcondurat/RiderProjects/TelegramClone/WebApi/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/vladcondurat/RiderProjects/TelegramClone/WebApi/bin/Debug/net8.0/Swashbuckle.AspNetCore.Annotations.dll

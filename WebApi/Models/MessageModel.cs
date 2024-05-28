@@ -12,5 +12,3 @@ public class MessageModel
     public int UserId { get; set; }
     public UserModel User { get; set; } = null!;
 }
-
-//aici de exemplu cum pun ca macar una e required?

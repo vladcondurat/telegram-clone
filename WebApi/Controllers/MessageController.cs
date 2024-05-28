@@ -1,8 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Features.Messages;
-using Services.Features.Users;
 using WebApi.Mappers;
 using WebApi.Models;
 

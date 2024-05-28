@@ -20,6 +20,7 @@ namespace WebApi.Configurations
                     Description = "Please insert the JWT token"
                 });
                 c.OperationFilter<BasicAuthOperationsFilter>();
+                c.EnableAnnotations();
             });
         }
 

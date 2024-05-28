@@ -1,9 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace WebApi.Models.Room;
 
 public class RoomCardModel
 {
+    [Required]
     public int Id { get; set; }
+    [Url]
     public string? ImageUrl { get; set; }
+    [Required]
     public string RoomName { get; set; } = string.Empty;
     public DateTime? LastMessageTime { get; set; }
     
