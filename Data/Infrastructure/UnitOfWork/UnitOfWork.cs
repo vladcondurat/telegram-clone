@@ -1,5 +1,8 @@
 using Data.Infrastructure.Context;
+using Data.Repositories.MessageRepository;
+using Data.Repositories.RoomRepository;
 using Data.Repositories.UserRepository;
+using Data.Repositories.UserRoomRepository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Infrastructure.UnitOfWork;
@@ -10,10 +13,16 @@ public class UnitOfWork : IUnitOfWork
 
     public UnitOfWork(
         IAppDbContext dBContext,
-        IUserRepository userRepository)
+        IUserRepository userRepository,
+        IMessageRepository messageRepository,
+        IRoomRepository roomRepository,
+        IUserRoomRepository userRoomRepository)
     {
         _dBContext = dBContext;
         Users = userRepository;
+        Messages = messageRepository;
+        Rooms = roomRepository;
+        UserRooms = userRoomRepository;
     }
 
     public int SaveChanges()
@@ -39,6 +48,9 @@ public class UnitOfWork : IUnitOfWork
     #region Repositories
 
     public IUserRepository Users { get; }
+    public IMessageRepository Messages { get; }
+    public IRoomRepository Rooms { get; }
+    public IUserRoomRepository UserRooms { get; }
 
     #endregion
 }

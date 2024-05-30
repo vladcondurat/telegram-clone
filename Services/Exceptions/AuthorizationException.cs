@@ -5,11 +5,11 @@ namespace Services.Exceptions;
 public sealed class AuthorizationException : BaseException
 {
     
-    public AuthorizationException() : base(ErrorCodes.GenericError) { }
+    public AuthorizationException() : base(ErrorCodes.AuthorizationBase) { }
 
-    public AuthorizationException(string message) : base(ErrorCodes.GenericError, message) { }
+    public AuthorizationException(string message) : base(ErrorCodes.AuthorizationBase, message) { }
     
-    public AuthorizationException(string message, Exception innerException) : base(ErrorCodes.GenericError, message, innerException) { }
+    public AuthorizationException(string message, Exception innerException) : base(ErrorCodes.AuthorizationBase, message, innerException) { }
 
     public AuthorizationException(ErrorCodes code, string message, Exception innerException) : base(code, message, innerException) { }
 

@@ -36,4 +36,9 @@ public class Repository<T> : IRepository<T> where T : class
     {
         DbContext.Set<T>().Add(entity);
     }
+
+    public void AddRange(IEnumerable<T> entities)
+    {
+        DbContext.Set<T>().AddRange(entities);
+    }
 }

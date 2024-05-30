@@ -8,6 +8,13 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+      <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.4.0" />
+      <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="7.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Constants\" />
     </ItemGroup>
 
 </Project>

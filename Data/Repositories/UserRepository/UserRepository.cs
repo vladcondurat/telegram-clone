@@ -14,20 +14,19 @@ public class UserRepository : Repository<User>, IUserRepository
         _dbContext = dbContext;
     }
 
-    public User GetById(int id)
+    public User? GetUserByUserId(int id)
     {
         var user = _dbContext.Users
             .AsNoTracking()
             .FirstOrDefault(u => u.Id == id);
-        return user!;
+        return user;
     }
 
-    public User GetByUsername(string username)
+    public User? GetUserByUsername(string username)
     {
         var user = _dbContext.Users
             .AsNoTracking()
             .FirstOrDefault(u => u.Username == username);
-        return user!;
+        return user;
     }
-    
 }

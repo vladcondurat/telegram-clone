@@ -1,5 +1,7 @@
 using Data.Entities;
 using Data.Infrastructure.UnitOfWork;
+using Microsoft.IdentityModel.Tokens;
+using Services.Constants;
 using Services.Exceptions;
 using Services.Mappers;
 
@@ -13,31 +15,18 @@ public class UserService : IUserService
     {
         _unitOfWork = unitOfWork;
     }
-
- 
-
-    public UserDto GetDetails(int? id)
+    
+    public UserPreviewDto GetUser(int id)
     {
-        //handle null id
-        var user = _unitOfWork.Users.GetById(id.Value);
+        var user = _unitOfWork.Users.GetUserByUserId(id);
 
-        if (user is null) throw new EntityNotFoundException(id.Value, typeof(User));
+        if (user is null)
+        {
+            throw new EntityNotFoundException(ErrorCodes.UserNotFound,id, typeof(User));
+        }
         
         var mapper = new UserMapper();
-        
-        return mapper.UserToUserDto(user);
+        return mapper.UserToUserPreviewDto(user);
     }
-
-    public UserDto GetUserByUsername(string? username)
-    {
-        //handle null username
-        var user = _unitOfWork.Users.GetByUsername(username);
-        
-        if (user is null) throw new EntityNotFoundException(user.Id, typeof(User));
-        
-        var mapper = new UserMapper();
-        
-        return mapper.UserToUserDto(user);
-    }
-
+    
 }
