@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using WebApi.Models.Messages;
 
 namespace WebApi.Models.Room;
 

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Models;
+namespace WebApi.Models.Messages;
 
 public class MessageModel
 {
@@ -10,5 +10,5 @@ public class MessageModel
     public string? TextContent { get; set; }
     
     public int UserId { get; set; }
-    public UserModel User { get; set; } = null!;
+    public UserPreviewModel User { get; set; } = null!;
 }

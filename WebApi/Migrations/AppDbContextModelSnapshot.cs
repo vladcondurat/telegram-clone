@@ -53,7 +53,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Message");
                 });
 
             modelBuilder.Entity("Data.Entities.Room", b =>
@@ -78,7 +78,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Room");
                 });
 
             modelBuilder.Entity("Data.Entities.User", b =>
@@ -131,13 +131,13 @@ namespace WebApi.Migrations
             modelBuilder.Entity("Data.Entities.Message", b =>
                 {
                     b.HasOne("Data.Entities.Room", "Room")
-                        .WithMany("Messages")
+                        .WithMany("Message")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Entities.User", "User")
-                        .WithMany("Messages")
+                        .WithMany("Message")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -168,14 +168,14 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("Data.Entities.Room", b =>
                 {
-                    b.Navigation("Messages");
+                    b.Navigation("Message");
 
                     b.Navigation("UserRooms");
                 });
 
             modelBuilder.Entity("Data.Entities.User", b =>
                 {
-                    b.Navigation("Messages");
+                    b.Navigation("Message");
 
                     b.Navigation("UserRooms");
                 });

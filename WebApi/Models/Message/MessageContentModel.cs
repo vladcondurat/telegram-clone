@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Models;
+namespace WebApi.Models.Messages;
 
-public class CreateMessageModel
+public class MessageContentModel
 {
     [Url]
     public string? AttachedImageUrl { get; set; }

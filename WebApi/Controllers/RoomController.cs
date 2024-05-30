@@ -19,10 +19,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        [SwaggerOperation(
-            Summary = "Create a new room",
-            Description = "Creates a new room with the specified details."
-        )]
+        [SwaggerOperation(Description = "Creates a new room with the specified details.")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoomModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
@@ -31,15 +28,13 @@ namespace WebApi.Controllers
         {
             ValidateUserId();
             var mapper = new RoomMapper();
-            var room = _roomService.CreateRoom(mapper.CreateRoomModelToCreateRoomDto(createRoomModel), UserId!.Value);
-            return StatusCode(StatusCodes.Status201Created, mapper.RoomDtoToRoomModel(room));
+            var createRoomDto = mapper.CreateRoomModelToCreateRoomDto(createRoomModel);
+            var roomDto = _roomService.CreateRoom(createRoomDto, UserId!.Value);
+            return StatusCode(StatusCodes.Status201Created, mapper.RoomDtoToRoomModel(roomDto));
         }
 
         [HttpGet]
-        [SwaggerOperation(
-            Summary = "Get all rooms",
-            Description = "Retrieves a list of all rooms."
-        )]
+        [SwaggerOperation(Description = "Retrieves a list of all rooms.")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RoomCardModel>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
@@ -53,10 +48,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{roomId}")]
-        [SwaggerOperation(
-            Summary = "Get room by ID",
-            Description = "Retrieves the details of a room by its ID."
-        )]
+        [SwaggerOperation(Description = "Retrieves the details of a room by its ID.")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoomModel))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
@@ -70,10 +62,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{roomId}")]
-        [SwaggerOperation(
-            Summary = "Update room",
-            Description = "Updates the details of a room by its ID."
-        )]
+        [SwaggerOperation(Description = "Updates the details of a room by its ID.")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UpdateRoomModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -84,16 +73,13 @@ namespace WebApi.Controllers
         {
             ValidateUserId();
             var mapper = new RoomMapper();
-            var room = _roomService.UpdateRoom(mapper.UpdateRoomModelToUpdateRoomDto(updateRoomModel), roomId,
-                UserId!.Value);
-            return Ok(mapper.RoomDtoToRoomModel(room));
+            var updateRoomDto = mapper.UpdateRoomModelToUpdateRoomDto(updateRoomModel);
+            var roomDto = _roomService.UpdateRoom(updateRoomDto, roomId, UserId!.Value);
+            return Ok(mapper.RoomDtoToRoomModel(roomDto));
         }
 
         [HttpDelete("{roomId}")]
-        [SwaggerOperation(
-            Summary = "Leave room",
-            Description = "Leave a room by its ID."
-        )]
+        [SwaggerOperation(Description = "Leave a room by its ID.")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -107,10 +93,7 @@ namespace WebApi.Controllers
         }
         
         [HttpPost("add-users/{roomId}")]
-        [SwaggerOperation(
-            Summary = "Add users to a room",
-            Description = "Adds users to a room specified by its ID."
-        )]
+        [SwaggerOperation(Description = "Adds users to a room specified by its ID.")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

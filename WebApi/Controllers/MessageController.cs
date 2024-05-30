@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Features.Messages;
 using WebApi.Mappers;
-using WebApi.Models;
+using WebApi.Models.Messages;
 
 namespace WebApi.Controllers;
 
@@ -18,35 +18,32 @@ public class MessagesController : ApplicationController
         _messageService = messageService;
     }
     
-    [HttpGet]
-    public IActionResult GetMessageDetails(int? messageId)
+    [HttpPost("{roomId}")]
+    public IActionResult CreateMessage(MessageContentModel messageContentModel, int roomId)
     {
+        ValidateUserId();
         var mapper = new MessageMapper();
-        var messageDto = _messageService.GetMessageDetailsById(messageId);
-        return Ok(mapper.MessageDtoToMessageModel(messageDto));
-    }
-    
-    [HttpPut]
-    public IActionResult UpdateMessage(CreateMessageModel model , int? messageId)
-    {
-        var mapper = new MessageMapper();
-        var messageDto = _messageService.UpdateMessage(mapper.CreateMessageModelToCreateMessageDto(model), messageId, UserId);
-        return Ok(mapper.MessageDtoToMessageModel(messageDto));
-    }
-
-    [HttpPost]
-    public IActionResult CreateMessage(CreateMessageModel model, int roomId)
-    {
-        var mapper = new MessageMapper();
-        var messageDto = _messageService.CreateMessage(mapper.CreateMessageModelToCreateMessageDto(model), UserId, roomId);
-        return Ok(mapper.MessageDtoToMessageModel(messageDto));    
+        var messageContentDto = mapper.MessageContentModelToMessageContentDto(messageContentModel);
+        var messageDto = _messageService.CreateMessage(messageContentDto, roomId, UserId!.Value);
+        return StatusCode(StatusCodes.Status201Created,mapper.MessageDtoToMessageModel(messageDto));    
     } 
-    
-    [HttpDelete]
-    public IActionResult DeleteMessage(int? messageId)
+
+    [HttpPut("{messageId}")]
+    public IActionResult UpdateMessage(MessageContentModel messageContentModel , int messageId)
     {
-        _messageService.DeleteMessage(messageId, UserId);
-        return Ok();
+        ValidateUserId();
+        var mapper = new MessageMapper();
+        var messageContentDto = mapper.MessageContentModelToMessageContentDto(messageContentModel);
+        var messageDto = _messageService.UpdateMessage(messageContentDto, messageId, UserId!.Value);
+        return Ok(mapper.MessageDtoToMessageModel(messageDto));
+    }
+    
+    [HttpDelete("{messageId}")]
+    public IActionResult DeleteMessage(int messageId)
+    {
+        ValidateUserId();
+        _messageService.DeleteMessage(messageId, UserId!.Value);
+        return NoContent();
     }
 
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Features.Auth;
+using Swashbuckle.AspNetCore.Annotations;
 using WebApi.Mappers;
 using WebApi.Models;
 
@@ -19,20 +20,30 @@ public class AuthController : ApplicationController
     }
 
     [HttpPost("login")]
-    public ActionResult<string> Login(LoginModel loginModel)
+    [SwaggerOperation(Description = "Authenticates a user and returns a JWT token.")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+    public IActionResult Login(LoginModel loginModel)
     {
         var mapper = new IdentityMapper();
-        
-        var token =_authService.LoginUser(mapper.LoginModelToLoginDto(loginModel));
+        var loginDto = mapper.LoginModelToLoginDto(loginModel);
+        var token =_authService.LoginUser(loginDto);
         return Ok(token);
     }
     
     [HttpPost("register")]
-    public ActionResult Register(RegistrationModel registrationModel)
+    [SwaggerOperation(Description = "Registers a new user.")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+    public IActionResult Register(RegistrationModel registrationModel)
     {
         var mapper = new IdentityMapper();
-        _authService.RegisterUser(mapper.RegistrationModelToRegistrationDto(registrationModel));
-        return StatusCode(201);
+        var registrationDto = mapper.RegistrationModelToRegistrationDto(registrationModel);
+        _authService.RegisterUser(registrationDto);
+        return NoContent();
     }
 
 }

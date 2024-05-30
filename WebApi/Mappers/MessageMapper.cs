@@ -1,6 +1,7 @@
 using Riok.Mapperly.Abstractions;
 using Services.Features.Messages;
 using WebApi.Models;
+using WebApi.Models.Messages;
 
 namespace WebApi.Mappers;
 
@@ -8,6 +9,5 @@ namespace WebApi.Mappers;
 public partial class MessageMapper
 {
     public partial MessageModel MessageDtoToMessageModel(MessageDto mapperDto);
-    public partial CreateMessageDto CreateMessageModelToCreateMessageDto(CreateMessageModel mapperModel);
-    public partial MessageDto MessageModelToMessageDto(MessageModel mapperModel);
+    public partial MessageContentDto MessageContentModelToMessageContentDto(MessageContentModel mapperContentModel);
 }

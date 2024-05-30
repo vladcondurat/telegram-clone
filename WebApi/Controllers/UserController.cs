@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Features.Users;
+using Swashbuckle.AspNetCore.Annotations;
 using WebApi.Mappers;
+using WebApi.Models;
 
 namespace WebApi.Controllers;
 
@@ -15,14 +16,19 @@ public class UserController : ApplicationController
     {
         _userService = userService;
     }
-
+    
     [HttpGet]
-    [Authorize]
-    public IActionResult GetUserDetails(int? userId)
+    [SwaggerOperation(Description = "Retrieves the details of a user by their ID.")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserPreviewModel))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+    public IActionResult GetUserDetails()
     {
+        ValidateUserId();
         var mapper = new UserMapper();
-        var userDto = _userService.GetUserById(userId);
-        return Ok(mapper.UserDtoToUserModel(userDto));
+        var userDto = _userService.GetUser(UserId!.Value);
+        return Ok(mapper.UserPreviewDtoToUserPreviewModel(userDto));
     }
 
 }

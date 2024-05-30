@@ -12,7 +12,7 @@ namespace WebApi.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Rooms",
+                name: "Room",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -43,7 +43,7 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Messages",
+                name: "Message",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -60,7 +60,7 @@ namespace WebApi.Migrations
                     table.ForeignKey(
                         name: "FK_Messages_Rooms_RoomId",
                         column: x => x.RoomId,
-                        principalTable: "Rooms",
+                        principalTable: "Room",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -84,7 +84,7 @@ namespace WebApi.Migrations
                     table.ForeignKey(
                         name: "FK_UserRooms_Rooms_RoomId",
                         column: x => x.RoomId,
-                        principalTable: "Rooms",
+                        principalTable: "Room",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -97,12 +97,12 @@ namespace WebApi.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_RoomId",
-                table: "Messages",
+                table: "Message",
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_UserId",
-                table: "Messages",
+                table: "Message",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -115,13 +115,13 @@ namespace WebApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Messages");
+                name: "Message");
 
             migrationBuilder.DropTable(
                 name: "UserRooms");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "Room");
 
             migrationBuilder.DropTable(
                 name: "Users");

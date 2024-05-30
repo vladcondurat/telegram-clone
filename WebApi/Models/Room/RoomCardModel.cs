@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using WebApi.Models.Messages;
 
 namespace WebApi.Models.Room;
 
@@ -12,6 +13,6 @@ public class RoomCardModel
     public string RoomName { get; set; } = string.Empty;
     public DateTime? LastMessageTime { get; set; }
     
-    public int? LastMessageId { get; set; }
+    // public int? LastMessageId { get; set; }
     public MessageModel? LastMessage { get; set; }
 }
