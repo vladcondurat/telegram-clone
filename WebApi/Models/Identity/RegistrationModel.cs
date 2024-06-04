@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using WebApi.Attributes;
 
-namespace WebApi.Models;
+namespace WebApi.Models.Identity;
 
 public class RegistrationModel
 {

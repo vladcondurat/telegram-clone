@@ -1,9 +1,6 @@
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Services.Exceptions;
-
-namespace WebApi.Middleware;
 
 public class GlobalExceptionHandler : IExceptionHandler
 {
@@ -20,53 +17,60 @@ public class GlobalExceptionHandler : IExceptionHandler
         CancellationToken cancellationToken
     )
     {
-        if (exception is EntityNotFoundException)
+        ProblemDetails problemDetails;
+
+        switch (exception)
         {
-            var problemDetails = new ProblemDetails
-            {
-                Status = StatusCodes.Status404NotFound,
-                Title = "Not Found",
-                Detail = exception.Message,
-                Instance = httpContext.Request.Path
-            };
-            httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            case EntityNotFoundException:
+                problemDetails = new ProblemDetails
+                {
+                    Status = StatusCodes.Status404NotFound,
+                    Title = "Not Found",
+                    Detail = exception.Message,
+                    Instance = httpContext.Request.Path
+                };
+                httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+                break;
 
-            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+            case AuthorizationException:
+                problemDetails = new ProblemDetails
+                {
+                    Status = StatusCodes.Status403Forbidden,
+                    Title = "Forbidden",
+                    Detail = exception.Message,
+                    Instance = httpContext.Request.Path
+                };
+                httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
+                break;
 
-            return true;
-        } 
-        if (exception is AuthorizationException)
-        {
-            var problemDetails = new ProblemDetails
-            {
-                Status = StatusCodes.Status403Forbidden,
-                Title = "Not Found",
-                Detail = exception.Message,
-                Instance = httpContext.Request.Path
-            };
-            httpContext.Response.StatusCode = StatusCodes.Status403Forbidden; //403
+            case BusinessException:
+                problemDetails = new ProblemDetails
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "Bad Request",
+                    Detail = exception.Message,
+                    Instance = httpContext.Request.Path
+                };
+                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                break;
 
-            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+            default:
+                problemDetails = new ProblemDetails
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Title = "Server Error",
+                    Detail = exception.Message,
+                    Instance = httpContext.Request.Path
+                };
 
-            return true;
+                _logger.LogError(exception, "Exception occurred: {Message}", exception.Message);
+
+                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                break;
         }
-        else
-        {
-            var problemDetails = new ProblemDetails
-            {
-                Status = StatusCodes.Status500InternalServerError,
-                Title = "Server Error",
-                Detail = exception.Message,
-                Instance = httpContext.Request.Path
-            };
 
-            _logger.LogError(exception, "Exception occurred: {Message}", exception.Message);
+        await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
 
-            httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError; //500
-
-            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
-
-            return true;
-        }
+        return true;
     }
 }

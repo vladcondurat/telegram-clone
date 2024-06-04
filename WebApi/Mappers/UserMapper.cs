@@ -1,6 +1,7 @@
 using Riok.Mapperly.Abstractions;
 using Services.Features.Users;
 using WebApi.Models;
+using WebApi.Models.Identity;
 
 namespace WebApi.Mappers;
 

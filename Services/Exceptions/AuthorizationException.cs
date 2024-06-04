@@ -4,7 +4,6 @@ namespace Services.Exceptions;
 
 public sealed class AuthorizationException : BaseException
 {
-    
     public AuthorizationException() : base(ErrorCodes.AuthorizationBase) { }
 
     public AuthorizationException(string message) : base(ErrorCodes.AuthorizationBase, message) { }
@@ -16,5 +15,4 @@ public sealed class AuthorizationException : BaseException
     public AuthorizationException(ErrorCodes code, string message) : base(code, message) { }
 
     public AuthorizationException(ErrorCodes code) : base(code) { }
-
 }

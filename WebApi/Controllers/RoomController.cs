@@ -43,7 +43,7 @@ namespace WebApi.Controllers
             ValidateUserId();
             var mapper = new RoomMapper();
             var rooms = _roomService.GetRooms(UserId!.Value);
-            var roomModels = rooms.Select(r => mapper.RoomCardDtoToRoomCardModel(r));
+            var roomModels = mapper.GetRoomDtoToGetRoomModel(rooms);
             return Ok(roomModels);
         }
 

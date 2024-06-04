@@ -18,8 +18,9 @@ public class MessageRepository : Repository<Message>, IMessageRepository
     {
         var message = _dbContext.Messages
             .AsNoTracking()
+            .Include(m => m.User)
             .FirstOrDefault(m => m.Id == id);
         return message;
     }
-    
+    //maybe create 2?
 }

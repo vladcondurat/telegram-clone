@@ -12,5 +12,5 @@ public partial class RoomMapper
     public partial CreateRoomDto CreateRoomModelToCreateRoomDto(CreateRoomModel createRoomModel);
     public partial RoomCardModel RoomCardDtoToRoomCardModel(RoomCardDto roomCardDto);
     public partial UpdateRoomDto UpdateRoomModelToUpdateRoomDto(UpdateRoomModel updateRoomModel);
-    
+    public partial GetRoomsModel GetRoomDtoToGetRoomModel(GetRoomsDto getRoomsDto);
 }

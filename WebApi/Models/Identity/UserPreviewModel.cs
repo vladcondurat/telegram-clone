@@ -1,4 +1,4 @@
-namespace WebApi.Models;
+namespace WebApi.Models.Identity;
 
 public class UserPreviewModel
 {

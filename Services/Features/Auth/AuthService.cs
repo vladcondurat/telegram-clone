@@ -22,18 +22,18 @@ public sealed class AuthService : IAuthService
         _config = config;
     }
 
-    public string LoginUser(LoginDto loginDto)
+    public AuthTokenDto LoginUser(LoginDto loginDto)
     {
         var user = _unitOfWork.Users.GetUserByUsername(loginDto.Username);
 
         if (user == null)
         {
-            throw new AuthorizationException();
+            throw new BusinessException(ErrorCodes.InvalidUsernameOrPassword,"Invalid username or password");
         }
 
         if (user.Password != loginDto.Password)
         {
-            throw new AuthorizationException();
+            throw new BusinessException(ErrorCodes.InvalidUsernameOrPassword,"Invalid username or password");
         }
 
         return GenerateToken(user);
@@ -56,10 +56,13 @@ public sealed class AuthService : IAuthService
         _unitOfWork.SaveChanges();
     }
 
-    private string GenerateToken(User user)
+    private AuthTokenDto GenerateToken(User user)
     {
         var jwt = new JwtBuilder(_config);
         jwt.AddClaim(JwtClaims.Id, user.Id.ToString());
-        return jwt.GetToken();
+        return new AuthTokenDto
+        {
+            Token = jwt.GetToken(),
+        };
     }
 }

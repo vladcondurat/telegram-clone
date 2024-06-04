@@ -12,6 +12,7 @@ public enum ErrorCodes
     BusinessBase = 3000,
     RoomMinUsers = BusinessBase + 1,
     UsernameAlreadyExists = BusinessBase + 2,
-    MessageEmpty = BusinessBase + 3
+    MessageEmpty = BusinessBase + 3,
+    InvalidUsernameOrPassword = BusinessBase + 4
 
 }

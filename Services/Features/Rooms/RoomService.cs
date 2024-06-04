@@ -68,7 +68,7 @@ public class RoomService : IRoomService
         return mapper.RoomToRoomDto(room);
     }
     
-    public IEnumerable<RoomCardDto> GetRooms(int userId)
+    public GetRoomsDto GetRooms(int userId)
     {
         var user = _unitOfWork.Users.GetUserByUserId(userId);
         if (user is null)
@@ -91,7 +91,12 @@ public class RoomService : IRoomService
             return roomCardDto;
         });
         
-        return roomsDto;
+        var getRoomsDto = new GetRoomsDto()
+        {
+            Rooms = roomsDto,
+        };
+        
+        return getRoomsDto;
     }
     
     public RoomDto UpdateRoom(UpdateRoomDto dto, int roomId, int userId)

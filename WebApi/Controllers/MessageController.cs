@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Features.Messages;
 using WebApi.Mappers;
-using WebApi.Models.Messages;
+using WebApi.Models.Message;
 
 namespace WebApi.Controllers;
 

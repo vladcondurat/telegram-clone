@@ -4,6 +4,7 @@ using Services.Features.Auth;
 using Swashbuckle.AspNetCore.Annotations;
 using WebApi.Mappers;
 using WebApi.Models;
+using WebApi.Models.Identity;
 
 namespace WebApi.Controllers;
 
@@ -29,8 +30,9 @@ public class AuthController : ApplicationController
     {
         var mapper = new IdentityMapper();
         var loginDto = mapper.LoginModelToLoginDto(loginModel);
-        var token =_authService.LoginUser(loginDto);
-        return Ok(token);
+        var authTokenDto =_authService.LoginUser(loginDto);
+        var authTokenModel = mapper.AuthTokenDtoToAuthTokenModel(authTokenDto);
+        return Ok(authTokenModel);
     }
     
     [HttpPost("register")]

@@ -4,21 +4,19 @@ namespace Services.Exceptions;
 
 public abstract class BaseException : Exception
 {
-    public ErrorCodes Code { get; protected set; }
-    
-    protected BaseException(ErrorCodes code)
-    {
-        Code = code;
+    public ErrorCodes ErrorCode { get; }
+
+    protected BaseException(ErrorCodes errorCode) : base() 
+    { 
+        ErrorCode = errorCode;
+    }
+    protected BaseException(ErrorCodes errorCode, string message) : base(message) 
+    { 
+        ErrorCode = errorCode;
     }
 
-    protected BaseException(ErrorCodes code, string message) 
-    {
-        Code = code;
+    protected BaseException(ErrorCodes errorCode, string message, Exception innerException) : base(message, innerException)
+    { 
+        ErrorCode = errorCode;
     }
-
-    protected BaseException(ErrorCodes code, string message, Exception innerException) 
-    {
-        Code = code;
-    }
-    
 }

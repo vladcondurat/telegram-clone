@@ -3,6 +3,7 @@ using Services.Features.Users;
 using Swashbuckle.AspNetCore.Annotations;
 using WebApi.Mappers;
 using WebApi.Models;
+using WebApi.Models.Identity;
 
 namespace WebApi.Controllers;
 

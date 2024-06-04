@@ -38,6 +38,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerProperties();
 builder.Services.AddJwtAuthorization(builder.Configuration);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        corsPolicyBuilder => corsPolicyBuilder.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -52,12 +60,7 @@ app.UseExceptionHandler();
 
 app.UseRouting();
 
-app.UseCors(corsPolicyBuilder =>
-{
-    corsPolicyBuilder.WithOrigins("http://localhost:3000")
-        .AllowAnyHeader()
-        .AllowAnyMethod();
-});
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 
