@@ -1,4 +1,6 @@
+using Data.Constants;
 using Data.Entities;
+using Data.Infrastructure.S3;
 using Data.Infrastructure.UnitOfWork;
 using Microsoft.IdentityModel.Tokens;
 using Services.Constants;
@@ -10,10 +12,12 @@ namespace Services.Features.Rooms;
 public class RoomService : IRoomService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IS3Handler _s3Handler;
     
-    public RoomService (IUnitOfWork unitOfWork)
+    public RoomService (IUnitOfWork unitOfWork, IS3Handler s3Handler)
     {
         _unitOfWork = unitOfWork;
+        _s3Handler = s3Handler;
     }
 
     public RoomDto CreateRoom(CreateRoomDto createRoomDto, int userId)
@@ -30,9 +34,19 @@ public class RoomService : IRoomService
             }
         }
 
-        if (userIdsList.Count < 2)
+        if (userIdsList.Distinct().Count() < 2)
         {
             throw new BusinessException(ErrorCodes.RoomMinUsers,"Room must have at least 2 users");
+        }
+
+        if (string.IsNullOrWhiteSpace(createRoomDto.RoomName))
+        {
+            createRoomDto.RoomName = Defaults.DefaultRoomName;
+        }
+        
+        if (string.IsNullOrWhiteSpace(createRoomDto.ImageUrl))
+        {
+            createRoomDto.ImageUrl = Defaults.DefaultRoomImage;
         }
 
         var room = new Room
@@ -89,11 +103,11 @@ public class RoomService : IRoomService
             }
  
             return roomCardDto;
-        });
+        }).OrderByDescending(r => r.LastMessage?.CreatedAt).ToList();
         
-        var getRoomsDto = new GetRoomsDto()
+        var getRoomsDto = new GetRoomsDto
         {
-            Rooms = roomsDto,
+            Rooms = roomsDto
         };
         
         return getRoomsDto;
@@ -112,10 +126,12 @@ public class RoomService : IRoomService
         {
             throw new AuthorizationException();
         }
-
-        if (!dto.ImageUrl.IsNullOrEmpty())
+        
+        if (dto.ImageUrl != null)
         {
-            room.ImageUrl = dto.ImageUrl!;
+            Console.WriteLine("sal");
+            var url = _s3Handler.UploadFile(dto.ImageUrl);
+            room.ImageUrl = url;
         }
 
         if (!dto.RoomName.IsNullOrEmpty())

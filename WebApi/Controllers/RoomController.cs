@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Features.Rooms;
 using Swashbuckle.AspNetCore.Annotations;
@@ -58,7 +57,8 @@ namespace WebApi.Controllers
             ValidateUserId();
             var mapper = new RoomMapper();
             var roomDto = _roomService.GetRoomById(roomId, UserId!.Value);
-            return Ok(mapper.RoomDtoToRoomModel(roomDto));
+            var roomModel = mapper.RoomDtoToRoomModel(roomDto);
+            return Ok(roomModel);
         }
 
         [HttpPut("{roomId}")]

@@ -48,13 +48,12 @@ public class MessageService : IMessageService
             UserId = userId,
             RoomId = roomId,
         };
-
+        
         _unitOfWork.Messages.Add(message);
         _unitOfWork.SaveChanges();
         
         message.User = user;
         message.Room = room;
-        room.LastMessageTime = DateTime.UtcNow;
 
         var mapper = new MessageMapper();
         return mapper.MessageToMessageDto(message);

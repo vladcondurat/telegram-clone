@@ -11,8 +11,6 @@ public class RoomCardModel
     public string? ImageUrl { get; set; }
     [Required]
     public string RoomName { get; set; } = string.Empty;
-    public DateTime? LastMessageTime { get; set; }
     
-    // public int? LastMessageId { get; set; }
     public MessageModel? LastMessage { get; set; }
 }

@@ -9,7 +9,8 @@ public class MessageModel
     [Url]
     public string? AttachedImageUrl { get; set; }
     public string? TextContent { get; set; }
+    public DateTime CreatedAt { get; set; }
     
     public int UserId { get; set; }
-    public UserPreviewModel User { get; set; } = null!;
+    public UserModel User { get; set; } = null!;
 }

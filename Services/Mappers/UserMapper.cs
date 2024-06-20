@@ -7,5 +7,7 @@ namespace Services.Mappers;
 [Mapper]
 public partial class UserMapper
 {
-    public partial UserPreviewDto UserToUserPreviewDto(User user);
+    public partial UserDto UserToUserDto(User user);
+    public partial User UpdateUserDtoToUser(UpdateUserDto updateUserDto);
+
 }

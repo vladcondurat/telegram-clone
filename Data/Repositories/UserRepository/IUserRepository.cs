@@ -7,5 +7,5 @@ public interface IUserRepository : IRepository<User>
 {
     User? GetUserByUserId(int id);
     User? GetUserByUsername(string username);
-  
+    IEnumerable<User> GetAllExceptCurrentUser(int id);
 }

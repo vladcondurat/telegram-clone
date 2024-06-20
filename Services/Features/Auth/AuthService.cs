@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using Data.Constants;
 using Data.Constants.Jwt;
 using Data.Entities;
 using Data.Infrastructure.UnitOfWork;
@@ -50,9 +51,11 @@ public sealed class AuthService : IAuthService
         }
 
         var mapper = new RegisterMapper();
-        var userEntity = mapper.RegisterToUserEntity(registerDto);
+        var user = mapper.RegisterToUserEntity(registerDto);
+
+        user.AvatarUrl = Defaults.DefaultUserImage;
         
-        _unitOfWork.Users.Add(userEntity);
+        _unitOfWork.Users.Add(user);
         _unitOfWork.SaveChanges();
     }
 

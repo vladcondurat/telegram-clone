@@ -21,7 +21,7 @@ public class AuthController : ApplicationController
     }
 
     [HttpPost("login")]
-    [SwaggerOperation(Description = "Authenticates a user and returns a JWT token.")]
+    [SwaggerOperation(Description = "Authenticates a user and returns a JWT token")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ProblemDetails))]
@@ -36,7 +36,7 @@ public class AuthController : ApplicationController
     }
     
     [HttpPost("register")]
-    [SwaggerOperation(Description = "Registers a new user.")]
+    [SwaggerOperation(Description = "Registers a new user")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]

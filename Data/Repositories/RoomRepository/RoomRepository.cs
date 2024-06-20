@@ -39,13 +39,11 @@ public class RoomRepository : Repository<Room>, IRoomRepository
             .Include(r => r.Messages)
             .ThenInclude(m => m.User)
             .Where(r => r.Users.Any(u => u.Id == userId))
-            .OrderByDescending(rm => rm.LastMessageTime)
             .Select(r => new Room
                 {
                     Id = r.Id,
                     ImageUrl = r.ImageUrl,
                     RoomName = r.RoomName,
-                    LastMessageTime = r.LastMessageTime,
                     Messages = r.Messages.OrderByDescending(m => m.CreatedAt).Take(1)
                 })
             .ToList();

@@ -30,4 +30,27 @@ public class UserRoomRepository : Repository<UserRoom>, IUserRoomRepository
         return userRoom;
     }
     
+    public IEnumerable<User> GetUsersInRoomExceptCurrent(int roomId, int userId)
+    {
+        var users = _dbContext.UserRooms
+            .AsNoTracking()
+            .Include(ur => ur.User)
+            .Where(ur => ur.Room.Id == roomId && ur.UserId != userId)
+            .Select(ur => ur.User)
+            .ToList();
+        return users;
+    }
+
+    public IEnumerable<User> GetUsersOutsideRoom(int roomId)
+    {
+        var usersInRoom = _dbContext.UserRooms
+            .AsNoTracking()
+            .Where(ur => ur.Room.Id == roomId)
+            .Select(ur => ur.UserId)
+            .ToList();
+        
+        return _dbContext.Users
+            .Where(u => !usersInRoom.Contains(u.Id))
+            .ToList();
+    }
 }

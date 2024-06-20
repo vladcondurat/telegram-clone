@@ -9,7 +9,7 @@ namespace WebApi.Middleware
         public static void AddJwtAuthorization(this IServiceCollection services, IConfiguration configuration)
         {
             byte[] securityKey = Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!);
-            var tokenValidationParameters = new TokenValidationParameters()
+            var tokenValidationParameters = new TokenValidationParameters
             {
                 IssuerSigningKey = new SymmetricSecurityKey(securityKey),
                 ValidAudience = configuration["JwtSettings:Audience"],

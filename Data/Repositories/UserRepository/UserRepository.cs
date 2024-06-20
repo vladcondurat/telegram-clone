@@ -29,4 +29,14 @@ public class UserRepository : Repository<User>, IUserRepository
             .FirstOrDefault(u => u.Username == username);
         return user;
     }
+    
+    public IEnumerable<User> GetAllExceptCurrentUser(int id)
+    {
+        var users = _dbContext.Users
+            .AsNoTracking()
+            .Where(u => u.Id != id)
+            .ToList();
+        return users;
+    }
+
 }
