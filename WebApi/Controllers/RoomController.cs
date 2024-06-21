@@ -100,13 +100,28 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-        public IActionResult AddUsersToRoom([FromBody] AddUsersToRoomRequest request, int roomId)
+        public IActionResult AddUsersToRoom(UserIdsModel userIdsModel, int roomId)
         {
             ValidateUserId();
-            _roomService.AddUsersToRoom(request.UserIdsToAdd, roomId);
+            _roomService.AddUsersToRoom(userIdsModel.UserIds, roomId);
             return NoContent();
         }
-
+        
+        [HttpDelete("remove-users/{roomId}")]
+        [SwaggerOperation(Description = "Removes users from a room specified by its ID.")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        public IActionResult RemoveUsersFromRoom([FromQuery] UserIdsModel userIdsModel, int roomId)
+        {
+            ValidateUserId();
+            var mapper = new UserMapper();
+            var userIdsDto = mapper.UserIdsModelToUserIdsDto(userIdsModel);
+            _roomService.RemoveUsersFromRoom(userIdsDto, roomId, UserId!.Value);
+            return NoContent();
+        }
     }
 }
 

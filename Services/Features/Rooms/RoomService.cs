@@ -5,6 +5,7 @@ using Data.Infrastructure.UnitOfWork;
 using Microsoft.IdentityModel.Tokens;
 using Services.Constants;
 using Services.Exceptions;
+using Services.Features.Users;
 using Services.Mappers;
 
 namespace Services.Features.Rooms;
@@ -129,7 +130,6 @@ public class RoomService : IRoomService
         
         if (dto.ImageUrl != null)
         {
-            Console.WriteLine("sal");
             var url = _s3Handler.UploadFile(dto.ImageUrl);
             room.ImageUrl = url;
         }
@@ -145,18 +145,6 @@ public class RoomService : IRoomService
         var mapper = new RoomMapper();
         return mapper.RoomToRoomDto(room);
     }
-    
-    public void LeaveRoom(int roomId, int userId)
-    {
-        var userRoom = _unitOfWork.UserRooms.GetUserRoomByUserIdAndRoomId(userId, roomId);
-        if (userRoom is null)
-        {
-            throw new AuthorizationException();
-        }
-        
-        _unitOfWork.UserRooms.Delete(userRoom);
-        _unitOfWork.SaveChanges();
-    } 
     
     public void AddUsersToRoom(IEnumerable<int> userIdsToAdd, int roomId)
     {
@@ -191,5 +179,36 @@ public class RoomService : IRoomService
         
         _unitOfWork.UserRooms.AddRange(newUserRooms);
         _unitOfWork.SaveChanges(); 
+    }
+    
+    public void LeaveRoom(int roomId, int userId)
+    {
+        var userRoom = _unitOfWork.UserRooms.GetUserRoomByUserIdAndRoomId(userId, roomId);
+        if (userRoom is null)
+        {
+            throw new AuthorizationException();
+        }
+        
+        _unitOfWork.UserRooms.Delete(userRoom);
+        _unitOfWork.SaveChanges();
+    } 
+    
+    public void RemoveUsersFromRoom(UserIdsDto userIdsDto, int roomId, int userId)
+    {
+        var isUserInRoom = _unitOfWork.UserRooms.IsUserInRoom(roomId, userId);
+        if (!isUserInRoom)
+        {
+            throw new AuthorizationException();
+        }
+        
+        var userRooms = _unitOfWork.UserRooms.GetUserRoomsByRoomId(roomId);
+        var userRoomsToRemove = userRooms.Where(ur => userIdsDto.UserIds.Contains(ur.UserId)).ToList();
+        
+        foreach (var userRoom in userRoomsToRemove)
+        {
+            _unitOfWork.UserRooms.Delete(userRoom);
+        }
+        
+        _unitOfWork.SaveChanges();
     }
 }

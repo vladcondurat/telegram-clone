@@ -53,4 +53,13 @@ public class UserRoomRepository : Repository<UserRoom>, IUserRoomRepository
             .Where(u => !usersInRoom.Contains(u.Id))
             .ToList();
     }
+    
+    public IEnumerable<UserRoom> GetUserRoomsByRoomId(int roomId)
+    {
+        var userRooms = _dbContext.UserRooms
+            .AsNoTracking()
+            .Where(ur => ur.Room.Id == roomId)
+            .ToList();
+        return userRooms;
+    }
 }

@@ -8,6 +8,4 @@ namespace Services.Mappers;
 public partial class UserMapper
 {
     public partial UserDto UserToUserDto(User user);
-    public partial User UpdateUserDtoToUser(UpdateUserDto updateUserDto);
-
 }

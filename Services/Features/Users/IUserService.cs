@@ -6,5 +6,5 @@ public interface IUserService
     GetUsersDto GetUsers(int userId);
     GetUsersDto GetUsersInRoom(int roomId, int userId);
     GetUsersDto GetUsersOutsideRoom(int roomId, int userId);
-    UserDto UpdateUser( UpdateUserDto updateUserDto, int userId);
+    UserDto UpdateUser(UpdateUserDto updateUserDto, int userId);
 }

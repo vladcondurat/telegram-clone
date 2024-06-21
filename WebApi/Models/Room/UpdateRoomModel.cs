@@ -4,7 +4,7 @@ namespace WebApi.Models.Room;
 
 public class UpdateRoomModel
 {
-    public FileUploadModel? ImageUrl { get; set; } 
+    public IFormFile? ImageUrl { get; set; } 
     public string? RoomName { get; set; } 
     
 }

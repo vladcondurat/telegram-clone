@@ -7,6 +7,7 @@ public interface IUserRoomRepository : IRepository<UserRoom>
 {
     bool IsUserInRoom(int roomId, int userId); 
     UserRoom? GetUserRoomByUserIdAndRoomId(int userId, int roomId);
+    IEnumerable<UserRoom> GetUserRoomsByRoomId(int roomId);
     IEnumerable<User> GetUsersInRoomExceptCurrent(int roomId, int userId);
     IEnumerable<User> GetUsersOutsideRoom(int roomId);
 }
