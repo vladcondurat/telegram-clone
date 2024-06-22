@@ -1,10 +1,10 @@
-using System.ComponentModel.DataAnnotations;
+using WebApi.Attributes;
 
 namespace WebApi.Models.Message;
 
 public class MessageContentModel
 {
-    [Url]
-    public string? AttachedImageUrl { get; set; }
+    [Image]
+    public IFormFile? AttachedImageUrl { get; set; }
     public string? TextContent { get; set; }
 }
