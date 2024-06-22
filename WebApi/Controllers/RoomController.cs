@@ -23,7 +23,7 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-        public IActionResult CreateRoom(CreateRoomModel createRoomModel)
+        public IActionResult CreateRoom([FromBody] CreateRoomModel createRoomModel)
         {
             ValidateUserId();
             var mapper = new RoomMapper();

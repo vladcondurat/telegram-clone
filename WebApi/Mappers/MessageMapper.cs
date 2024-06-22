@@ -1,6 +1,5 @@
 using Riok.Mapperly.Abstractions;
-using Services.Features.Messages;
-using WebApi.Models;
+using Services.Features.Messages.Dtos;
 using WebApi.Models.Message;
 
 namespace WebApi.Mappers;

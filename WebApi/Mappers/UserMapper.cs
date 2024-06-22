@@ -1,5 +1,5 @@
 using Riok.Mapperly.Abstractions;
-using Services.Features.Users;
+using Services.Features.Users.Dtos;
 using WebApi.Models.Identity;
 using WebApi.Models.Room;
 

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Services.Exceptions;
 using Services.Features.Auth.Jwt;
 
 namespace WebApi.Controllers

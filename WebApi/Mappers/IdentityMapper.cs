@@ -1,6 +1,6 @@
 using Riok.Mapperly.Abstractions;
 using Services.Features.Auth;
-using WebApi.Models;
+using Services.Features.Auth.Dtos;
 using WebApi.Models.Identity;
 
 namespace WebApi.Mappers;
