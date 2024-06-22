@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerProperties();
 
 builder.Services.AddCorsConfiguration();
+builder.Services.AddTransient<LastActiveMiddleware>();
 
 var app = builder.Build();
 
@@ -37,6 +38,8 @@ app.UseCors("AllowSpecificOrigin");
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMiddleware<LastActiveMiddleware>();
 
 app.MapControllers();
 

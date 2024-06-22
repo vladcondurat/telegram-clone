@@ -32,14 +32,6 @@ namespace WebApi.Controllers
             }
         }
 
-        protected void ValidateModel()
-        {
-            if (!ModelState.IsValid)
-            {
-                throw new BusinessException("Model is not valid");
-            }
-        }
-
         protected void ValidateUserId()
         {
             if (UserId is null)
