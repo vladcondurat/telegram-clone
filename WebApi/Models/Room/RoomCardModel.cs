@@ -5,11 +5,8 @@ namespace WebApi.Models.Room;
 
 public class RoomCardModel
 {
-    [Required]
     public int Id { get; set; }
-    [Url]
-    public string? ImageUrl { get; set; }
-    [Required]
+    public string ImageUrl { get; set; } = string.Empty;
     public string RoomName { get; set; } = string.Empty;
     
     public MessageModel? LastMessage { get; set; }

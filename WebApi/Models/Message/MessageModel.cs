@@ -6,7 +6,6 @@ namespace WebApi.Models.Message;
 public class MessageModel
 {
     public int Id { get; set; }
-    [Url]
     public string? AttachedImageUrl { get; set; }
     public string? TextContent { get; set; }
     public DateTime CreatedAt { get; set; }

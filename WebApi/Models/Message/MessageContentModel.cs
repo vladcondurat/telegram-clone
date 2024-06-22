@@ -5,6 +5,6 @@ namespace WebApi.Models.Message;
 public class MessageContentModel
 {
     [Image]
-    public IFormFile? AttachedImageUrl { get; set; }
+    public IFormFile? AttachedImage { get; set; }
     public string? TextContent { get; set; }
 }

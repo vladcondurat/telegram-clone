@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Features.Messages;
+using Swashbuckle.AspNetCore.Annotations;
 using WebApi.Mappers;
 using WebApi.Models.Message;
 
@@ -19,6 +20,12 @@ public class MessagesController : ApplicationController
     }
     
     [HttpPost("{roomId}")]
+    [SwaggerOperation(Description = "Creates a new message with the specified details.")]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(MessageModel))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
     public IActionResult CreateMessage(MessageContentModel messageContentModel, int roomId)
     {
         ValidateUserId();
@@ -29,6 +36,12 @@ public class MessagesController : ApplicationController
     } 
 
     [HttpPut("{messageId}")]
+    [SwaggerOperation(Description = "Updates the details of a message.")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MessageModel))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
     public IActionResult UpdateMessage(MessageContentModel messageContentModel , int messageId)
     {
         ValidateUserId();
@@ -39,6 +52,12 @@ public class MessagesController : ApplicationController
     }
     
     [HttpDelete("{messageId}")]
+    [SwaggerOperation(Description = "Deletes a message by its ID.")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
     public IActionResult DeleteMessage(int messageId)
     {
         ValidateUserId();

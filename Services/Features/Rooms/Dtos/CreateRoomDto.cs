@@ -1,11 +1,11 @@
-using Services.Features.Users;
+using Microsoft.AspNetCore.Http;
 
 namespace Services.Features.Rooms;
 
 public class CreateRoomDto
 {
-    public string? ImageUrl { get; set; } 
-    public string RoomName { get; set; } = string.Empty;
+    public IFormFile? Image { get; set; } 
+    public string? RoomName { get; set; } 
     
     public IEnumerable<int> UserIds { get; set; } = new List<int>();
 }

@@ -5,6 +5,6 @@ namespace Services.Features.Rooms;
 
 public class UpdateRoomDto
 {
-    public IFormFile? ImageUrl { get; set; } 
+    public IFormFile? Image { get; set; } 
     public string? RoomName { get; set; }
 }

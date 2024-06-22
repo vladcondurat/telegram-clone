@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Http;
+
 namespace Services.Features.Messages;
 
 public class MessageContentDto
 {
-    public string? AttachedImageUrl { get; set; }
+    public IFormFile? AttachedImage { get; set; }
     public string? TextContent { get; set; }
 }
