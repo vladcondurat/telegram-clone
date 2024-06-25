@@ -1,3 +1,5 @@
+using MassTransit;
+using Services.Contracts;
 using WebApi.Configurations;
 using WebApi.Middleware;
 
@@ -18,6 +20,20 @@ builder.Services.AddSwaggerProperties();
 
 builder.Services.AddCorsConfiguration();
 builder.Services.AddTransient<LastActiveMiddleware>();
+
+builder.Services.AddMassTransit(x =>
+{
+    x.SetKebabCaseEndpointNameFormatter();
+    
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+    });
+});
 
 var app = builder.Build();
 
