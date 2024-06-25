@@ -1,3 +1,5 @@
+using Services.Features.Messages.Dtos;
+
 namespace Services.Features.Messages;
 
 public interface IMessageService

@@ -1,3 +1,5 @@
+using Services.Features.Users.Dtos;
+
 namespace Services.Features.Users;
 
 public interface IUserService
@@ -7,4 +9,5 @@ public interface IUserService
     GetUsersDto GetUsersInRoom(int roomId, int userId);
     GetUsersDto GetUsersOutsideRoom(int roomId, int userId);
     UserDto UpdateUser(UpdateUserDto updateUserDto, int userId);
+    void UpdateUserLastActive(int userId);
 }

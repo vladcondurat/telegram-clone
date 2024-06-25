@@ -1,0 +1,6 @@
+@ChatlyRealTimeServer_HostAddress = http://localhost:5003
+
+GET {{ChatlyRealTimeServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

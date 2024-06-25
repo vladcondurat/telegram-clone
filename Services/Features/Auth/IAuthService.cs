@@ -1,3 +1,5 @@
+using Services.Features.Auth.Dtos;
+
 namespace Services.Features.Auth;
 
 public interface IAuthService

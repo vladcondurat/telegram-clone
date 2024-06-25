@@ -1,4 +1,4 @@
-namespace Services.Features.Users;
+namespace Services.Features.Users.Dtos;
 
 public class GetUsersDto
 {

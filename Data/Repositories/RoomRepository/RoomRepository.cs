@@ -32,6 +32,17 @@ public class RoomRepository : Repository<Room>, IRoomRepository
         return room;
     }
     
+    public Room? GetRoomByUserIds(int userId1, int userId2)
+    {
+        var room = _dbContext.Rooms
+            .AsNoTracking()
+            .Include(r => r.Users)
+            .FirstOrDefault(r => r.Users.Count() == 2 &&
+                                 r.Users.Any(u => u.Id == userId1) &&
+                                 r.Users.Any(u => u.Id == userId2));
+        return room;
+    }
+    
     public IEnumerable<Room> GetRoomsByUserId(int? userId)
     {
         var rooms = _dbContext.Rooms
@@ -44,13 +55,14 @@ public class RoomRepository : Repository<Room>, IRoomRepository
                     Id = r.Id,
                     ImageUrl = r.ImageUrl,
                     RoomName = r.RoomName,
+                    IsGroup = r.IsGroup,
                     Messages = r.Messages.OrderByDescending(m => m.CreatedAt).Take(1)
                 })
             .ToList();
         
-        foreach (var room in rooms)
+        foreach (var room in rooms.Where(room => room.Messages.FirstOrDefault() is null))
         {
-            if (room.Messages.FirstOrDefault() is null) room.Messages = new List<Message>();
+            room.Messages = new List<Message>();
         }
 
         return rooms;

@@ -1,6 +1,6 @@
-using Services.Features.Users;
+using Services.Features.Users.Dtos;
 
-namespace Services.Features.Messages;
+namespace Services.Features.Messages.Dtos;
 
 public class MessageDto
 {

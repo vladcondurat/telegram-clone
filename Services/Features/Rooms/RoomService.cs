@@ -5,7 +5,9 @@ using Data.Infrastructure.UnitOfWork;
 using Microsoft.IdentityModel.Tokens;
 using Services.Constants;
 using Services.Exceptions;
+using Services.Features.Rooms.Dtos;
 using Services.Features.Users;
+using Services.Features.Users.Dtos;
 using Services.Mappers;
 
 namespace Services.Features.Rooms;
@@ -25,10 +27,11 @@ public class RoomService : IRoomService
     {
         var userIdsList = new List<int> { userId };
         userIdsList.AddRange(createRoomDto.UserIds);
-        
+
         foreach (var id in userIdsList)
         {
             var existingUser = _unitOfWork.Users.GetUserByUserId(id);
+            
             if (existingUser is null)
             {
                 throw new EntityNotFoundException(id, typeof(User));
@@ -39,29 +42,43 @@ public class RoomService : IRoomService
         {
             throw new BusinessException(ErrorCodes.RoomMinUsers,"Room must have at least 2 users");
         }
-
+        
+        var isGroup = userIdsList.Distinct().Count() > 2;
+        var mapper = new RoomMapper();
+        
+        if (!isGroup)
+        {
+            var otherUserId= userIdsList.FirstOrDefault(id => id != userId);
+            var existingRoom = _unitOfWork.Rooms.GetRoomByUserIds(userId, otherUserId);
+            
+            if (existingRoom is not null)
+            {
+                return mapper.RoomToRoomDto(existingRoom);
+            }
+        }
+        
         if (string.IsNullOrWhiteSpace(createRoomDto.RoomName))
         {
             createRoomDto.RoomName = Defaults.DefaultRoomName;
         }
-        
-        if (string.IsNullOrWhiteSpace(createRoomDto.ImageUrl))
-        {
-            createRoomDto.ImageUrl = Defaults.DefaultRoomImage;
-        }
 
         var room = new Room
         {
-            ImageUrl = createRoomDto.ImageUrl,
+            ImageUrl = Defaults.DefaultRoomImage,
             RoomName = createRoomDto.RoomName,
+            IsGroup = isGroup
         };
-
+        
+        if (createRoomDto.Image is not null)
+        {
+            room.ImageUrl = _s3Handler.UploadFile(createRoomDto.Image);
+        }
+        
         _unitOfWork.Rooms.Add(room);
         _unitOfWork.SaveChanges();
         
         AddUsersToRoom(userIdsList, room.Id);
         
-        var mapper = new RoomMapper();
         return mapper.RoomToRoomDto(room);
     }
 
@@ -77,6 +94,14 @@ public class RoomService : IRoomService
         if (!isUserInRoom)
         {
             throw new AuthorizationException();
+        }
+
+        if (!room.IsGroup)
+        {
+            var otherUser = _unitOfWork.UserRooms.GetUsersInRoomExceptCurrent(roomId, userId).First();
+            room.RoomName = otherUser.Username;
+            room.ImageUrl = otherUser.AvatarUrl;
+            room.LastActive = otherUser.LastActive;
         }
         
         var mapper = new RoomMapper();
@@ -97,6 +122,15 @@ public class RoomService : IRoomService
         var messageMapper = new MessageMapper();
         var roomsDto = rooms.Select(room =>
         {
+            Console.WriteLine(room.IsGroup);
+            if (!room.IsGroup)
+            {
+                var otherUser = _unitOfWork.UserRooms.GetUsersInRoomExceptCurrent(room.Id, userId).First();
+                room.RoomName = otherUser.Username;
+                room.ImageUrl = otherUser.AvatarUrl;
+                room.LastActive = otherUser.LastActive;
+            }
+            
             var roomCardDto = roomMapper.RoomToRoomCardDto(room);
             if (room.Messages.Any())
             {
@@ -127,10 +161,15 @@ public class RoomService : IRoomService
         {
             throw new AuthorizationException();
         }
-        
-        if (dto.ImageUrl != null)
+
+        if (!room.IsGroup)
         {
-            var url = _s3Handler.UploadFile(dto.ImageUrl);
+            throw new BusinessException(ErrorCodes.GroupOnlyAction, "Only group details can be updated");
+        }
+        
+        if (dto.Image != null)
+        {
+            var url = _s3Handler.UploadFile(dto.Image);
             room.ImageUrl = url;
         }
 
@@ -152,6 +191,11 @@ public class RoomService : IRoomService
         if (existingRoom is null)
         {
             throw new EntityNotFoundException(ErrorCodes.RoomNotFound, roomId, typeof(Room));
+        }
+        
+        if (!existingRoom.IsGroup && existingRoom.Users.Count() > 2)
+        {
+            return;
         }
         
         var newUserRooms = new List<UserRoom>();
@@ -189,6 +233,12 @@ public class RoomService : IRoomService
             throw new AuthorizationException();
         }
         
+        var room = _unitOfWork.Rooms.GetRoomByRoomId(roomId);
+        if (!room!.IsGroup)
+        {
+            throw new BusinessException(ErrorCodes.GroupOnlyAction, "Only group details can be updated");
+        }
+        
         _unitOfWork.UserRooms.Delete(userRoom);
         _unitOfWork.SaveChanges();
     } 
@@ -199,6 +249,12 @@ public class RoomService : IRoomService
         if (!isUserInRoom)
         {
             throw new AuthorizationException();
+        }
+
+        var room = _unitOfWork.Rooms.GetRoomByRoomId(roomId);
+        if (!room!.IsGroup)
+        {
+            throw new BusinessException(ErrorCodes.GroupOnlyAction, "Only group details can be updated");
         }
         
         var userRooms = _unitOfWork.UserRooms.GetUserRoomsByRoomId(roomId);

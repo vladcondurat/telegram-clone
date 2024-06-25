@@ -22,5 +22,4 @@ public class MessageRepository : Repository<Message>, IMessageRepository
             .FirstOrDefault(m => m.Id == id);
         return message;
     }
-    //maybe create 2?
 }

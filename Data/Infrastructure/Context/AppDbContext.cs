@@ -42,8 +42,8 @@ public class AppDbContext : DbContext, IAppDbContext
         modelBuilder.Entity<User>().Property(x => x.Password).HasMaxLength(100);
         modelBuilder.Entity<User>().Property(x => x.Email).HasMaxLength(100);
         modelBuilder.Entity<User>().Property(x => x.AvatarUrl).HasMaxLength(1000);
-        modelBuilder.Entity<Message>().Property(x => x.AttachedImageUrl).HasMaxLength(500);
         modelBuilder.Entity<Message>().Property(x => x.TextContent).HasMaxLength(10000);
+        modelBuilder.Entity<Message>().Property(x => x.AttachedImageUrl).HasMaxLength(1000);
         modelBuilder.Entity<Room>().Property(x => x.ImageUrl).HasMaxLength(1000);
         modelBuilder.Entity<Room>().Property(x => x.RoomName).HasMaxLength(100);
 

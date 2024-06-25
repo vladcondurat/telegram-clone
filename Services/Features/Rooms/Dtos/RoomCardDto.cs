@@ -1,6 +1,6 @@
-using Services.Features.Messages;
+using Services.Features.Messages.Dtos;
 
-namespace Services.Features.Rooms;
+namespace Services.Features.Rooms.Dtos;
 
 public class RoomCardDto
 {

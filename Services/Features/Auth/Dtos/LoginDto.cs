@@ -1,4 +1,4 @@
-namespace Services.Features.Auth;
+namespace Services.Features.Auth.Dtos;
 
 public class LoginDto
 {

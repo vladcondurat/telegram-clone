@@ -1,6 +1,7 @@
 using Data.Entities;
 using Riok.Mapperly.Abstractions;
 using Services.Features.Users;
+using Services.Features.Users.Dtos;
 
 namespace Services.Mappers;
 

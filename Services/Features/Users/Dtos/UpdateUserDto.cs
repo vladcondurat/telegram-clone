@@ -1,7 +1,6 @@
-using Data.Infrastructure.S3;
 using Microsoft.AspNetCore.Http;
 
-namespace Services.Features.Users;
+namespace Services.Features.Users.Dtos;
 
 public class UpdateUserDto
 {

@@ -3,6 +3,7 @@ using Data.Infrastructure.S3;
 using Data.Infrastructure.UnitOfWork;
 using Services.Constants;
 using Services.Exceptions;
+using Services.Features.Users.Dtos;
 using Services.Mappers;
 
 namespace Services.Features.Users;
@@ -145,5 +146,18 @@ public class UserService : IUserService
         var mapper = new UserMapper();
         return mapper.UserToUserDto(existingUser);
     }
-
+    
+    public void UpdateUserLastActive(int userId)
+    {
+        var user = _unitOfWork.Users.GetUserByUserId(userId);
+        if (user is null)
+        {
+            throw new EntityNotFoundException(ErrorCodes.UserNotFound,userId, typeof(User));
+        }
+        
+        user.LastActive = DateTime.UtcNow;
+        _unitOfWork.Users.Update(user);
+        _unitOfWork.SaveChanges();
+        _unitOfWork.Detach(user);
+    }
 }

@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 using Data.Constants;
 using Data.Constants.Jwt;
 using Data.Entities;
@@ -7,6 +5,7 @@ using Data.Infrastructure.UnitOfWork;
 using Microsoft.Extensions.Configuration;
 using Services.Constants;
 using Services.Exceptions;
+using Services.Features.Auth.Dtos;
 using Services.Features.Auth.Jwt;
 using Services.Mappers;
 

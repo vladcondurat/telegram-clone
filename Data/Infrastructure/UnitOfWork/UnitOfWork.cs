@@ -30,6 +30,11 @@ public class UnitOfWork : IUnitOfWork
         return _dBContext.SaveChanges();
     }
 
+    public void Detach<T>(T entity) where T : class
+    {
+        _dBContext.Entry(entity).State = EntityState.Detached;
+    }
+    
     public void Dispose()
     {
         _dBContext.Dispose();

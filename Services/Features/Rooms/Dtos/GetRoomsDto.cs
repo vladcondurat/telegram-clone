@@ -1,4 +1,4 @@
-namespace Services.Features.Rooms;
+namespace Services.Features.Rooms.Dtos;
 
 public class GetRoomsDto
 {

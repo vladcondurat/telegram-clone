@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Services.Features.Messages;
+namespace Services.Features.Messages.Dtos;
 
 public class MessageContentDto
 {
