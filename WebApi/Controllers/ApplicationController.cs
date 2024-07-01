@@ -25,7 +25,7 @@ namespace WebApi.Controllers
                 }
 
                 var contextUserId = currentUser.Claims.FirstOrDefault(user => user.Type == JwtClaims.Id)!.Value;
-                var isParsed = int.TryParse(contextUserId, out int userId);
+                var isParsed = int.TryParse(contextUserId, out var userId);
 
                 return isParsed ? userId : null;
             }

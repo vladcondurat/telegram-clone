@@ -1,5 +1,4 @@
 using MassTransit;
-using Services.Contracts;
 using WebApi.Configurations;
 using WebApi.Middleware;
 

@@ -8,7 +8,7 @@ public static class Cors
         {
             options.AddPolicy("AllowSpecificOrigin",
                 corsPolicyBuilder => corsPolicyBuilder
-                    .WithOrigins("http://localhost:5173", "https://4374-79-112-61-159.ngrok-free.app", "http://localhost")
+                    .WithOrigins("http://localhost:5173", "https://b23c-79-112-13-218.ngrok-free.app", "http://localhost")
                     .AllowAnyHeader()
                     .AllowAnyMethod());
         });

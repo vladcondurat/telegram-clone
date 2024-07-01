@@ -1,6 +1,6 @@
+using Data.Contracts;
 using MassTransit;
 using Microsoft.AspNetCore.SignalR;
-using Services.Contracts;
 using WebApi.RealTime.Hubs;
 
 namespace WebApi.RealTime.Consumers;
@@ -16,6 +16,7 @@ public class MessageCreatedConsumer : IConsumer<MessageCreated>
 
     public async Task Consume(ConsumeContext<MessageCreated> context)
     {
-        await _hubContext.Clients.All.ReceiveMessage(context.Message);
+        var chatRoomId = context.Message.RoomId;
+        await _hubContext.Clients.Group(chatRoomId).ReceiveMessage(context.Message);
     }
 }

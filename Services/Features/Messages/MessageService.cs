@@ -1,10 +1,10 @@
+using Data.Contracts;
 using Data.Entities;
 using Data.Infrastructure.S3;
 using Data.Infrastructure.UnitOfWork;
 using MassTransit;
 using Microsoft.IdentityModel.Tokens;
 using Services.Constants;
-using Services.Contracts;
 using Services.Exceptions;
 using Services.Features.Messages.Dtos;
 using Services.Mappers;
@@ -78,7 +78,7 @@ public class MessageService : IMessageService
 
         _publishEndpoint.Publish(new MessageCreated
         {
-            MessageId = message.Id.ToString(),
+            RoomId = roomId.ToString(),
         });
         
         return mapper.MessageToMessageDto(message);
@@ -116,9 +116,11 @@ public class MessageService : IMessageService
 
         var mapper = new MessageMapper();
         
+        var room = _unitOfWork.Rooms.GetRoomByMessageId(messageId);
+        
         _publishEndpoint.Publish(new MessageCreated
         {
-            MessageId = message.Id.ToString(),
+            RoomId = room!.Id.ToString(),
         });
         
         return mapper.MessageToMessageDto(message);
@@ -140,10 +142,12 @@ public class MessageService : IMessageService
         _unitOfWork.Messages.Delete(message);
         _unitOfWork.SaveChanges();
         
+        var room = _unitOfWork.Rooms.GetRoomByMessageId(messageId);
+        
         _publishEndpoint.Publish(new MessageCreated
         {
-            MessageId = messageId.ToString(),
+            RoomId = room!.Id.ToString(),
         });
     }
-
+    
 }

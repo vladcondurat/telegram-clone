@@ -26,10 +26,9 @@ Global
 		{FF502DD3-BA6D-4D6D-8EF6-36A53A0062DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF502DD3-BA6D-4D6D-8EF6-36A53A0062DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF502DD3-BA6D-4D6D-8EF6-36A53A0062DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		
-			{5EDB4E70-FD9B-4062-AF4D-A8DBB2EE1E28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-										{5EDB4E70-FD9B-4062-AF4D-A8DBB2EE1E28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-										{5EDB4E70-FD9B-4062-AF4D-A8DBB2EE1E28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-										{5EDB4E70-FD9B-4062-AF4D-A8DBB2EE1E28}.Release|Any CPU.Build.0 = Release|Any CPU
+        {5EDB4E70-FD9B-4062-AF4D-A8DBB2EE1E28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {5EDB4E70-FD9B-4062-AF4D-A8DBB2EE1E28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	    {5EDB4E70-FD9B-4062-AF4D-A8DBB2EE1E28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EDB4E70-FD9B-4062-AF4D-A8DBB2EE1E28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

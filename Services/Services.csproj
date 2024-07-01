@@ -21,7 +21,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Data\Data.csproj" />
-      <ProjectReference Include="..\WebApi.RealTime\WebApi.RealTime.csproj" />
     </ItemGroup>
 
 </Project>

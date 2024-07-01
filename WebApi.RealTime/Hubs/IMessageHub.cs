@@ -1,4 +1,4 @@
-using Services.Contracts;
+using Data.Contracts;
 
 namespace WebApi.RealTime.Hubs;
 

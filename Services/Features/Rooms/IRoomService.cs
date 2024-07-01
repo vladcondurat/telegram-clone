@@ -12,6 +12,5 @@ public interface IRoomService
     RoomDto UpdateRoom(UpdateRoomDto createRoomDto, int roomId, int userId);
     void AddUsersToRoom(IEnumerable<int> userIdsToAdd, int roomId);
     void LeaveRoom(int roomId, int userId);
-    void RemoveUsersFromRoom(UserIdsDto userIds ,int roomId, int userId);
-    
+    void RemoveUsersFromRoom(UserIdsDto userIds ,int roomId, int userId);   
 }

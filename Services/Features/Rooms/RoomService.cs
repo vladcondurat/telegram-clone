@@ -122,7 +122,6 @@ public class RoomService : IRoomService
         var messageMapper = new MessageMapper();
         var roomsDto = rooms.Select(room =>
         {
-            Console.WriteLine(room.IsGroup);
             if (!room.IsGroup)
             {
                 var otherUser = _unitOfWork.UserRooms.GetUsersInRoomExceptCurrent(room.Id, userId).First();
@@ -241,8 +240,8 @@ public class RoomService : IRoomService
         
         _unitOfWork.UserRooms.Delete(userRoom);
         _unitOfWork.SaveChanges();
-    } 
-    
+    }
+
     public void RemoveUsersFromRoom(UserIdsDto userIdsDto, int roomId, int userId)
     {
         var isUserInRoom = _unitOfWork.UserRooms.IsUserInRoom(roomId, userId);
@@ -256,15 +255,15 @@ public class RoomService : IRoomService
         {
             throw new BusinessException(ErrorCodes.GroupOnlyAction, "Only group details can be updated");
         }
-        
+
         var userRooms = _unitOfWork.UserRooms.GetUserRoomsByRoomId(roomId);
         var userRoomsToRemove = userRooms.Where(ur => userIdsDto.UserIds.Contains(ur.UserId)).ToList();
-        
+
         foreach (var userRoom in userRoomsToRemove)
         {
             _unitOfWork.UserRooms.Delete(userRoom);
         }
-        
+
         _unitOfWork.SaveChanges();
     }
 }
